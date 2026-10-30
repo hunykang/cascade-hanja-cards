@@ -4,6 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>통합 문서1 - Excel</title>
+<!-- 업데이트 로그 (화면에는 표시하지 않음 — 엑셀 위장 유지)
+- 2026-10-30: 최초 배포 (5급 단어 100장)
+- 2026-10-30: 5급 600장(기존 100+신규 500)·4급 500장·3급 500장, 레벨별 200장 랜덤 세션
+- 2026-10-30: 엑셀 위장 스킨 (통합 문서1 - Excel, 리본·수식줄·A~H 열·행번호·시트탭), 투명도 슬라이더 30~100%
+- 2026-10-30: 클릭 전 답 숨김, 첫 클릭/스페이스바 뜻 보기, 두 번째 클릭/스페이스바 다음 카드 이동
+- 2026-10-30: 한국어 행 글자별 음·뜻 표시 (예: 기온 — 氣 기운 기 · 溫 따뜻할 온)
+- 2026-10-30: GitHub Pages 배포 (cascade-hanja-cards), 루트 랜딩 15번 등록
+- 2026-10-30: 방문 카운터 추가 (엑셀 상태 표시줄, countapi)
+-->
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#d9d9d9;color:#222;font-family:Calibri,"맑은 고딕","Noto Sans KR","Noto Sans SC","Noto Sans JP",sans-serif}
@@ -92,7 +102,7 @@ button:disabled{opacity:.45;cursor:default}
 </div>
 </div>
 <div class="sheet-tabs"><span class="active" id="tab5">5급 단어</span><span id="tab4">4급 단어</span><span id="tab3">3급 단어</span></div>
-<div class="statusbar"><span>준비</span><div class="progress"><i id="bar"></i></div><span id="meta">준비 중…</span><span>엑셀 스킨 · 기본</span></div>
+<div class="statusbar"><span>준비</span><div class="progress"><i id="bar"></i></div><span id="meta">준비 중…</span><span id="visit-counter"></span><span>엑셀 스킨 · 기본</span></div>
 </div>
 </div>
 <p class="foot">· 멀리서 보면 엑셀 시트로 보이게 만든 것입니다. 카카오톡 PC버전의 엑셀 스타일처럼, 상단 서식 줄과 A~H 열, 왼쪽 행 번호, 격자선을 넣었습니다.<br>· 투명도 슬라이더로 창 전체 투명도를 30~100%까지 조절할 수 있습니다. 실제 엑셀 위에 이 창을 올려놓고 쓸 때는 카톡 팁처럼 40~50%까지 낮추면 뒤와 더 잘 섞입니다. 브라우저 창 자체의 투명도는 브라우저·OS 설정에 따라 달라질 수 있습니다.<br>· 일본어는 신자체, 중국어는 간체자 표기입니다. 같은 한자어라도 나라마다 일상 단어가 다를 때는 비고에 적었습니다. 5급은 기존 100장 + 신규 500장 = 600장, 4급·3급은 각 500장이며, 실행할 때마다 각 레벨 풀에서 200장을 무작위로 뽑습니다. 한자 급수는 누적 구조라 일부 단어가 여러 급수에 겹칠 수 있습니다.</p>
@@ -174,5 +184,6 @@ document.addEventListener('keydown',(e)=>{
 });
 startSession('5');
 </script>
+<script>(function(){var el=document.getElementById('visit-counter');if(!el)return;function kstDate(){return new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());}function fmt(n){return Number(n||0).toLocaleString('ko-KR');}var TOTAL_KEY='cascade-hanja-cards-total';var DAY_KEY='cascade-hanja-cards-day-'+kstDate();var counted=false;try{counted=sessionStorage.getItem('cascade-hanja-cards-counted')==='1';}catch(e){}var op=counted?'get':'hit';if(!counted){try{sessionStorage.setItem('cascade-hanja-cards-counted','1');}catch(e){}}function req(key){return fetch('https://countapi.mileshilliard.com/api/v1/'+op+'/'+key,{keepalive:true}).then(function(r){return r.json();});}req(TOTAL_KEY).then(function(t){return req(DAY_KEY).then(function(d){return [t,d];});}).then(function(res){el.textContent='오늘 '+fmt(res[1].value)+' · 전체 '+fmt(res[0].value);}).catch(function(){});})();</script>
 </body>
 </html>
